@@ -2,8 +2,9 @@ This is a short python script I wrote to automatically colorize original assets 
 
 Intended use:
 
-  1. Modify config.yaml to your liking, instructions in the file.
-  2. run main.py
+  1. Acquire a .png image with RGBA-channels or make one yourself by using GIMP, for example.
+  2. Modify config.yaml to your liking, instructions in the file. Useful site for picking colors in the HSL space: https://colorizer.org/, 
+  3. Run main.py 
 
 Currently tested on python version 3.14 and requires the following packages:
   - numpy
