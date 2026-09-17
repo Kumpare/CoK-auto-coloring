@@ -1,0 +1,46 @@
+### configs for multiple source images and their colorization settings
+
+out_dir: results # output folder. Creates subfolders for each file name
+
+sources: # contains all the source paths. Must have the following architecture in this file, each of which can have their own settings
+
+  trees: # can be named anything, must have all the info below
+    src_dir: originals/trees # either a folder or a file path
+
+    color: # Target color uses HLS (or HSL, but with channels swapped) color space
+      hue_min: 0 # hue must be between 0 and 360 and min_hue <= max_hue. To remove randomness, set them to be equal.
+      hue_max: 120
+      light_min: 0.2 #Same rules as for hue, but needs to be between 0 and 1
+      light_max: 0.5
+      saturation_min: 0.2 # Same rules as for light
+      saturation_max: 0.5
+
+    gradient_thickness: 31 # must be an odd integer between 3 and 31, or None.
+
+    grad_effect: 0.25 # must be a number between [-1, inf), all tho it doesn't make much sense to go above 2
+
+    n_generations: 25 # how many different colors there will be. Biggest "leaps" happen in powers of 3 (1, 3, 9, 27, 81, ...)
+
+    line_art_effect: 0.2 # Extra darkening for line arts to offset the brightening done by the coloration. 0 = black, 1 = no effect, bigger numbers = brighter line arts
+
+  planks:
+    src_dir: ./originals/wood_planks.png
+
+    color:
+      hue_min: 0
+      hue_max: 40
+      light_min: 0.1
+      light_max: 0.3
+      saturation_min: 0.1
+      saturation_max: 0.25
+
+    gradient_thickness: null
+
+    grad_effect: 0
+
+    n_generations: 9
+
+    line_art_effect: 0.2
+
+
+
