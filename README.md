@@ -1,4 +1,4 @@
-This is a short python script I wrote to automatically colorize original assets of Canvas of Kings.
+This is a short python script I wrote to automatically colorize original assets of Canvas of Kings. Technically works on any .png image with RGBA-channels, but results may vary.
 
 Intended use:
 
