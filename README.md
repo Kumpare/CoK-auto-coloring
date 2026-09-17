@@ -10,3 +10,8 @@ Currently tested on python version 3.14 and requires the following packages:
   - numpy
   - opencv-python
   - pyyaml
+
+To-improve:
+  - Some optimization
+  - progress bar when images are being generated
+  - ColorSpreader currently spreads the colors in a cube-shaped space. It would be more efficient to utilize HSL-space's double-cone-like shape.
