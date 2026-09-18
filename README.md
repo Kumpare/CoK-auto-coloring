@@ -15,3 +15,4 @@ To-improve:
   - Some optimization
   - progress bar when images are being generated
   - ColorSpreader currently spreads the colors in a cube-shaped space. It would be more efficient to utilize HSL-space's double-cone-like shape.
+  - Handle gradients better to allow further reaching gradients and different color values for gradients only
