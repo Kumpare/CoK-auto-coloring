@@ -10,10 +10,10 @@ sources: # contains all the source paths. Each Source must have all the info lis
     color: # Target color uses HLS (or HSL, but with channels swapped) color space
       hue_min: 0 # hue must be between 0 and 360 and hue_min <= hue_max. To stop hue from changing, set them to be equal. This is the "color" variable.
       hue_max: 120
-      light_min: 0.2 # Same rules as for hue, but needs to be between 0 and 1. This is the "brightness" variable.
-      light_max: 0.5
-      saturation_min: 0.2 # Same rules as for light. This is the "saturation" or "color intensity" variable.
-      saturation_max: 0.5
+      light_min: 20 # Same rules as for hue, but needs to be between 0 and 100. This is the "brightness" variable.
+      light_max: 50
+      saturation_min: 20 # Same rules as for light. This is the "saturation" or "color intensity" variable.
+      saturation_max: 50
 
     gradient_thickness: 31 # must be an odd integer between 3 and 31, or None. Affects how far from the line arts the gradient effect takes place. Smaller values have higher intensity as well.
 
@@ -29,10 +29,10 @@ sources: # contains all the source paths. Each Source must have all the info lis
     color:
       hue_min: 0
       hue_max: 40
-      light_min: 0.1
-      light_max: 0.3
-      saturation_min: 0.1
-      saturation_max: 0.25
+      light_min: 10
+      light_max: 30
+      saturation_min: 10
+      saturation_max: 25
 
     gradient_thickness: null
 

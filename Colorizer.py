@@ -31,9 +31,14 @@ class ColorSpreader:
         assert self.hue_max <= 360
 
         assert self.light_min >= 0
-        assert self.light_max <= 1
+        assert self.light_max <= 100
         assert self.saturation_min >= 0
-        assert self.saturation_max <= 1
+        assert self.saturation_max <= 100
+
+        self.light_min /= 100
+        self.light_max /= 100
+        self.saturation_min /= 100
+        self.saturation_max /= 100
 
     def __call__(self, n: int) -> np.ndarray:
         n_sides = int(n**(1/3))
@@ -51,8 +56,8 @@ class ColorSpreader:
             light_step = (self.light_max - self.light_min)/4
             sat_step = (self.saturation_max - self.saturation_min)/4
             other = ColorSpreader(hue_min=self.hue_min + hue_step, hue_max=self.hue_max - hue_step,
-                                  light_min=self.light_min + light_step, light_max=self.light_max - light_step,
-                                  saturation_min=self.saturation_min + sat_step, saturation_max=self.saturation_max - sat_step)
+                                  light_min=(self.light_min + light_step)*100, light_max=(self.light_max - light_step)*100,
+                                  saturation_min=(self.saturation_min + sat_step)*100, saturation_max=(self.saturation_max - sat_step)*100)
             x[n-r:, :] = other(r)
 
 
