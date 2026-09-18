@@ -157,7 +157,7 @@ class Colorizer:
 
     def _get_line_art_mask(self, img: np.ndarray) -> np.ndarray:
         gray = cv.cvtColor(img[:,:,:-1], cv.COLOR_BGR2GRAY)
-        return np.sqrt(np.expand_dims(np.clip(1 - (gray.astype('float32')-50)/205, 0, 1), -1))
+        return np.expand_dims(np.clip(1 - (gray.astype('float32')-75)/(255-75), 0, 1), -1)
 
     def _get_grad_color(self, color: np.ndarray) -> np.ndarray:
         grad_color = color.copy()
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     rand_color = ColorSpreader(0, 130, 0.2, 0.5, 0.2, 0.7)
     colorizer = Colorizer(rand_color, n_generations=50, grad_effect=-0.25)
 
-    img_path = f'originals/trees/tree1.png'
+    img_path = f'originals/wood_planks.png'
     out_dir = 'D:/Test'
 
     colorizer(img_path, out_dir)
