@@ -6,10 +6,7 @@ Intended use:
   2. Modify config.yaml to your liking, instructions in the file. Useful site for picking colors in the HSL space: https://colorizer.org/, 
   3. Run main.py 
 
-Currently tested on python version 3.14 and requires the following packages:
-  - numpy
-  - opencv-python
-  - pyyaml
+Currently tested on python version 3.14 with the packages in requirements.txt
 
 To-improve:
   - Some optimization
