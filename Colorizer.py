@@ -35,31 +35,44 @@ class ColorSpreader:
         assert self.saturation_min >= 0
         assert self.saturation_max <= 100
 
-        self.light_min /= 100
-        self.light_max /= 100
-        self.saturation_min /= 100
-        self.saturation_max /= 100
+
+        self.hue_min = int(self.hue_min)
+        self.hue_max = int(self.hue_max)
+        self.light_min = int(self.light_min)/100
+        self.light_max = int(self.light_max)/100
+        self.saturation_min = int(self.saturation_min)/100
+        self.saturation_max = int(self.saturation_max)/100
 
     def __call__(self, n: int) -> np.ndarray:
-        n_sides = int(n**(1/3))
-        r = n - n_sides**3
+        do_hues = int(self.hue_min != self.hue_max and n > 1)
+        do_lights = int(self.light_min != self.light_max and n > 1)
+        do_sats = int(self.saturation_min != self.saturation_max and n > 1)
+        n_dims = do_hues + do_lights + do_sats
+        n_sides = int(n**(1/n_dims)) if n_dims > 0 else 1
+        n_outputs = n_sides**n_dims
 
-        x = np.zeros((n, 3), dtype='float32')
+        r = n - n_outputs if n_dims > 0 else 0
 
-        hues = np.linspace(self.hue_min, self.hue_max, n_sides)
-        lights = np.linspace(self.light_min, self.light_max, n_sides)
-        sats = np.linspace(self.saturation_min, self.saturation_max, n_sides)
+        x = np.zeros((n_outputs + r, 3), dtype='float32')
 
-        x[:n - r, :] = np.array(np.meshgrid(hues, lights, sats)).T.reshape(-1, 3)
+        hues = np.linspace(self.hue_min, self.hue_max, n_sides) if do_hues == 1 and n_sides > 1 else np.array([(self.hue_min + self.hue_max)/2])
+        lights = np.linspace(self.light_min, self.light_max, n_sides) if do_lights == 1 and n_sides > 1 else np.array([(self.light_min + self.light_max)/2])
+        sats = np.linspace(self.saturation_min, self.saturation_max, n_sides) if do_sats == 1 and n_sides > 1 else np.array([(self.saturation_min + self.saturation_max)/2])
+
+        x[:n_outputs, :] = np.array(np.meshgrid(hues, lights, sats)).T.reshape(-1, 3)
         if r > 0:
-            hue_step = (self.hue_max - self.hue_min)/4
-            light_step = (self.light_max - self.light_min)/4
-            sat_step = (self.saturation_max - self.saturation_min)/4
-            other = ColorSpreader(hue_min=self.hue_min + hue_step, hue_max=self.hue_max - hue_step,
-                                  light_min=(self.light_min + light_step)*100, light_max=(self.light_max - light_step)*100,
-                                  saturation_min=(self.saturation_min + sat_step)*100, saturation_max=(self.saturation_max - sat_step)*100)
-            x[n-r:, :] = other(r)
-
+            if int(r**(1/n_dims)) > 1:
+                hue_step = (self.hue_max - self.hue_min)/4
+                light_step = (self.light_max - self.light_min)/4
+                sat_step = (self.saturation_max - self.saturation_min)/4
+                other = ColorSpreader(hue_min=self.hue_min + hue_step, hue_max=self.hue_max - hue_step,
+                                      light_min=(self.light_min + light_step)*100, light_max=(self.light_max - light_step)*100,
+                                      saturation_min=(self.saturation_min + sat_step)*100, saturation_max=(self.saturation_max - sat_step)*100)
+                x[n_outputs:, :] = other(r)
+            elif r == 1:
+                x[-1, :] = (self._mins + self._maxs)/2
+            else: # 1 < r < 8
+                x[n_outputs:, :] = np.linspace(self._mins, self._maxs, r + 2)[1:-1]
 
         return x
 
@@ -89,9 +102,9 @@ class Colorizer:
             line_art_mask = self._get_line_art_mask(img)
             result = img.copy()
             colors = self.random_color(self.n)
-            for i in range(self.n):
-                grad_color = self._get_grad_color(colors[i])
-                result[:,:,:-1] = self._colorize(img_hsv.copy(), line_art_mask, grad_magn, colors[i], grad_color)
+            for i, col in enumerate(colors):
+                grad_color = self._get_grad_color(col)
+                result[:,:,:-1] = self._colorize(img_hsv.copy(), line_art_mask, grad_magn, col, grad_color)
                 cv.imwrite(f'{result_dir}/{img_name}_{i+1}.png', result)
 
     def _make_out_dir(self, out_dir: str | os.PathLike):

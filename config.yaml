@@ -19,7 +19,7 @@ sources: # contains all the source paths. Each Source must have all the info lis
 
     grad_effect: 0.25 # must be a number between [-1, inf), all tho it doesn't make much sense to go above 2. 0 for no effect. Increases the "glow" effect near the line arts
 
-    n_generations: 25 # Must be > 0. How many different colors there will be. For best results, use perfect cubes (1 = 1^3, 8 = 2^3, 27 = 3^3, 64 = 4^3, ...).
+    n_generations: 27 # Must be > 0. How many different colors there will be. For best results, use perfect cubes (1 = 1^3, 8 = 2^3, 27 = 3^3, 64 = 4^3, ...).
 
     line_art_effect: 0.2 # Extra darkening for line arts to offset the brightening done by the coloration. 0 = black, 1 = no effect, bigger numbers = brighter line arts
 
