@@ -65,7 +65,7 @@ class ColorSpreader:
 
 class Colorizer:
 
-    ACCEPTED_FILE_FORMATS = ['.png']
+    ACCEPTED_FILE_FORMATS = ['.png', '.jpg', '.jpeg']
 
     def __init__(self, random_color: ColorSpreader, n_generations: int=20, gradient_thickness: int | None = 31, grad_effect: float = 0.1,
                  line_art_effect: float = 0.2):
@@ -125,6 +125,8 @@ class Colorizer:
         img = cv.imread(fp, cv.IMREAD_UNCHANGED)
         if img.shape[-1] == 4:
             return img
+
+        print(f"Image at {fp} is not a 4-channel image and will be skipped")
         return None
 
     def _get_gradients(self, x: np.ndarray) -> np.ndarray:
