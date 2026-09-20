@@ -38,10 +38,10 @@ class ColorSpreader:
 
         self.hue_min = int(self.hue_min)
         self.hue_max = int(self.hue_max)
-        self.light_min = int(self.light_min)/100
-        self.light_max = int(self.light_max)/100
-        self.saturation_min = int(self.saturation_min)/100
-        self.saturation_max = int(self.saturation_max)/100
+        self.light_min = self.light_min/100
+        self.light_max = self.light_max/100
+        self.saturation_min = self.saturation_min/100
+        self.saturation_max = self.saturation_max/100
 
     def __call__(self, n: int) -> np.ndarray:
         do_hues = int(self.hue_min != self.hue_max and n > 1)

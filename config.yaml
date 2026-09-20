@@ -8,9 +8,9 @@ sources: # contains all the source paths. Each Source must have all the info lis
     src_dir: originals/trees # either a folder or a file path
 
     color: # Target color uses HLS (or HSL, but with channels swapped) color space
-      hue_min: 0 # hue must be between 0 and 360 and hue_min <= hue_max. To stop hue from changing, set them to be equal. This is the "color" variable.
+      hue_min: 0 # hue must be an integer between 0 and 360 and hue_min <= hue_max. To stop hue from changing, set them to be equal. This is the "color" variable.
       hue_max: 120
-      light_min: 20 # Same rules as for hue, but needs to be between 0 and 100. This is the "brightness" variable.
+      light_min: 20 # Same rules as for hue, but needs to be a decimal number between 0 and 100. This is the "brightness" variable.
       light_max: 50
       saturation_min: 20 # Same rules as for light. This is the "saturation" or "color intensity" variable.
       saturation_max: 50
