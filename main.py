@@ -14,7 +14,7 @@ if len(os.listdir(out_root)) > 0:
     a = None
     while a not in ('y', 'n'):
         a = input(
-            f"Directory {out_root} is not empty. Some files may be overwritten and this can't be undone. Continue? y/n: \n").lower()
+            f"Directory {os.getcwd() + "\\" + out_root} is not empty. Some files may be overwritten and this can't be undone. Continue? y/n: \n").lower()
 
         if a == 'y':
             break
